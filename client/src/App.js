@@ -1,5 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
+import GoogleButton from 'react-google-button';
 import './App.css';
 import { authentication, signOutUser } from './service/firebase';
 
@@ -38,7 +39,7 @@ function App() {
 			<header className="App-header">
 				<p>Landing page</p>
 				{!isUserSignedIn ? (
-					<button onClick={signInWithGoogle}>Sign In</button>
+					<GoogleButton onClick={signInWithGoogle}>Sign In</GoogleButton>
 				) : (
 					<>
 						<button onClick={googleSignOut}>Sign Out</button>
