@@ -1,10 +1,9 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
-import Navbar from '../components/Navbar';
 import { useUserAuth } from '../context/UserAuthContext';
 
-const Home = () => {
+const Navbar = () => {
 	const { logOut, user } = useUserAuth();
 	const navigate = useNavigate();
 	const handleLogout = async () => {
@@ -17,14 +16,15 @@ const Home = () => {
 	};
 
 	return (
-		<Container>
-			<Navbar />
-			<div className="p-4 box mt-3 text-center">
-				Hello Welcome <br />
+		<div>
+			<div className="d-grid gap-2">
 				{user && user.displayName ? user.displayName : user.email}
+				<Button variant="primary" onClick={handleLogout}>
+					Log out
+				</Button>
 			</div>
-		</Container>
+		</div>
 	);
 };
 
-export default Home;
+export default Navbar;
