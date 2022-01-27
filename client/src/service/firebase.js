@@ -2,16 +2,17 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signOut } from 'firebase/auth';
 
 const firebaseConfig = {
-	apiKey: 'AIzaSyBQhK10BCtVATKnR1xRG32z3USzDWUAddA',
-	authDomain: 'portfolio-manager-1023.firebaseapp.com',
-	projectId: 'portfolio-manager-1023',
-	storageBucket: 'portfolio-manager-1023.appspot.com',
-	messagingSenderId: '831139081093',
-	appId: '1:831139081093:web:22df9805adf4899cd0f2ec'
+	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+	authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+	projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 export const authentication = getAuth(app);
 
 export const signOutUser = () => {
