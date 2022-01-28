@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const csv = require('csvtojson');
 //const middleware = require('./middleware/index');
 
 const PORT = process.env.PORT || 3001;
@@ -9,8 +10,22 @@ app.use(cors());
 
 //app.use(middleware.decodeToken);
 
-app.get('/api', (req, res) => {
-	return res.json({ message: 'Hello from server!' });
+app.get('/tickerSymbols', async (req, res) => {
+	let csvFile = await csv()
+		.fromFile('./data/markets/Nasdaq.csv')
+		.fromFile('./data/markets/NYSE.csv')
+		.fromFile('./data/markets/Euronext.csv')
+		.then(function (jsonArrayObj) {
+			for (const item of jsonArrayObj) {
+				if (item['field3'] || item['field4']) {
+					delete item['field3'];
+					delete item['field4'];
+				}
+			}
+			return jsonArrayObj;
+		});
+
+	return res.send(csvFile);
 });
 
 app.get('/api/watchlist', (req, res) => {
