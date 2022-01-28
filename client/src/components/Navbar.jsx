@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { useUserAuth } from '../context/UserAuthContext';
+import { StyledNavbar } from './Navbar.style';
 
 const Navbar = () => {
 	const { logOut, user } = useUserAuth();
@@ -16,14 +16,15 @@ const Navbar = () => {
 	};
 
 	return (
-		<div>
-			<div className="d-grid gap-2">
-				{user && user.displayName ? user.displayName : user.email}
-				<Button variant="primary" onClick={handleLogout}>
+		<StyledNavbar id="navbar" className="p-4 fixed-top">
+			<div>logo here</div>
+			<div>searchbar here</div>
+			<div id="user-menu" className="d-grid gap-2">
+				<div id="logout" onClick={handleLogout}>
 					Log out
-				</Button>
+				</div>
 			</div>
-		</div>
+		</StyledNavbar>
 	);
 };
 

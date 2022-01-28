@@ -1,4 +1,3 @@
-import { Container } from 'react-bootstrap';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -9,7 +8,7 @@ import Login from './views/Login';
 
 function App() {
 	return (
-		<Container>
+		<>
 			<UserAuthContextProvider>
 				<Routes>
 					<Route
@@ -24,7 +23,7 @@ function App() {
 					<Route path="/signup" element={<Signup />} />
 				</Routes>
 			</UserAuthContextProvider>
-		</Container>
+		</>
 	);
 }
 

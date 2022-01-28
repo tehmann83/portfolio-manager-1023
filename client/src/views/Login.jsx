@@ -3,6 +3,7 @@ import { Alert, Button, Form } from 'react-bootstrap';
 import GoogleButton from 'react-google-button';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../context/UserAuthContext';
+import { StyledLogin } from './Login.style';
 
 const Login = () => {
 	const [email, setEmail] = useState('');
@@ -33,7 +34,7 @@ const Login = () => {
 	};
 
 	return (
-		<>
+		<StyledLogin id="login-page">
 			<div className="p-4 box">
 				<h2 className="mb-3">Portfolio Manager Login</h2>
 				{error && <Alert variant="danger">{error}</Alert>}
@@ -72,7 +73,7 @@ const Login = () => {
 			<div className="p-4 box mt-3 text-center">
 				Don't have an account? <Link to="/signup">Sign up</Link>
 			</div>
-		</>
+		</StyledLogin>
 	);
 };
 
