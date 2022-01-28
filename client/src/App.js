@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import ProtectedRoute from './components/ProtectedRoute';
 import Signup from './components/Signup';
+import { StockSymbolsContextProvider } from './context/StockSymbolsContext';
 import { UserAuthContextProvider } from './context/UserAuthContext';
 import Home from './views/Home';
 import Login from './views/Login';
@@ -15,7 +16,9 @@ function App() {
 						path="/home"
 						element={
 							<ProtectedRoute>
-								<Home />
+								<StockSymbolsContextProvider>
+									<Home />
+								</StockSymbolsContextProvider>
 							</ProtectedRoute>
 						}
 					/>

@@ -8,7 +8,7 @@ const Searchbar = ({ onSearchSubmit }) => {
 		if (term !== '') {
 			onSearchSubmit(term);
 		}
-	}, [term, onSearchSubmit]);
+	}, [term]);
 
 	return (
 		<StyledSearchbar>
