@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const StyledSearchbar = styled.div`
+	width: 100%;
+
 	.searchbar {
-		width: 100%;
 		padding: 5%;
 		padding-top: 0;
 	}
