@@ -27,3 +27,22 @@ body {
   width: 40px !important;
   height: 38px !important;
 }
+
+/* components/MenuList.jsx */
+
+.List {
+  border: 1px solid #d9dddd;
+}
+
+.ListItemEven,
+.ListItemOdd {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ListItemEven {
+  background-color: #f8f8f0;
+}
+
+/*  */
