@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
 import GoogleButton from 'react-google-button';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,8 +9,14 @@ const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
-	const { logIn, googleSignIn } = useUserAuth();
+	const { logIn, googleSignIn, user } = useUserAuth();
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (user) {
+			navigate('/home');
+		}
+	});
 
 	const handleSubmit = async e => {
 		e.preventDefault();
