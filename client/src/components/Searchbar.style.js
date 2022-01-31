@@ -4,8 +4,7 @@ export const StyledSearchbar = styled.div`
 	width: 100%;
 
 	.searchbar {
-		padding: 5%;
-		padding-top: 0;
+		padding: 0 5%;
 	}
 
 	.searchbar-input {
@@ -21,6 +20,10 @@ export const StyledSearchbar = styled.div`
 	.searchbar-input:active {
 		border: solid 1px blue;
 		outline: none;
+	}
+
+	.search-result {
+		height: 38px;
 	}
 
 	@media only screen and (max-width: 480px) {

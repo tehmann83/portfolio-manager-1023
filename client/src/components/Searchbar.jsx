@@ -1,31 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
-import MenuList from './MenuList';
 import { StyledSearchbar } from './Searchbar.style';
 
 const Searchbar = ({ onSearchSubmit, suggestions, options }) => {
-	const [term, setTerm] = useState('');
+	/* const [term, setTerm] = useState(''); */
+	const [showOptions, setShowOptions] = useState(false);
+	const [selected, setSelected] = useState(undefined);
 
-	useEffect(() => {
+	/* useEffect(() => {
 		if (suggestions) {
 			console.log('suggestiosnsnsn: ', suggestions);
 		}
 		if (term !== '') {
 			onSearchSubmit(term);
 		}
-	}, [term]); // todo: https://stackoverflow.com/questions/55840294/how-to-fix-missing-dependency-warning-when-using-useeffect-react-hook
+	}, [term]); */ // todo: https://stackoverflow.com/questions/55840294/how-to-fix-missing-dependency-warning-when-using-useeffect-react-hook
+
+	const inputEntered = txt => {
+		if (txt.length > 1) {
+			setShowOptions(true);
+		} else if (txt.length <= 1) {
+			setShowOptions(false);
+		}
+	};
+
+	const handleChange = selectedOption => {
+		setSelected(selectedOption);
+	};
 
 	return (
 		<StyledSearchbar>
 			<div className="searchbar">
 				<Select
-					components={{ MenuList }}
-					options={options}
+					/* components={{ MenuList }} */
+					options={!showOptions ? [] : options}
 					getOptionLabel={options => options['Company']}
 					getOptionValue={options => options['Ticker']}
 					backspaceRemovesValue={true}
-					debounce={2}
+					/* debounce={2} */
+					onInputChange={e => inputEntered(e)}
+					onChange={handleChange}
+					isClearable={true}
 				/>
+				<div className="search-result">
+					<span>
+						{!selected ? '' : `${selected.Ticker} - ${selected.Company}`}
+					</span>
+				</div>
 				{/* <input
 					className="searchbar-input"
 					type="text"
