@@ -1,11 +1,15 @@
 const express = require('express');
 const cors = require('cors');
 const csv = require('csvtojson');
+const yahooFinance = require('yahoo-finance');
+const bodyParser = require('body-parser');
 //const middleware = require('./middleware/index');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cors());
 
 //app.use(middleware.decodeToken);
@@ -26,6 +30,29 @@ app.get('/tickerSymbols', async (req, res) => {
 		});
 
 	return res.send(csvFile);
+});
+
+app.post('/tickerTimeSeries', async (req, res) => {
+	console.log('from server: ', req.body);
+	const ticker = req.body.ticker;
+	const today = new Date();
+	const todayString = new Date(
+		today.getTime() - today.getTimezoneOffset() * 60000
+	)
+		.toISOString()
+		.split('T')[0];
+
+	const timeSeries = await yahooFinance.historical({
+		symbol: ticker,
+		from: new Date(Date.now() - 3600 * 1000 * 24 * 1000),
+		to: todayString
+	});
+
+	if (timeSeries) {
+		res.status(200).json(timeSeries);
+	} else {
+		res.send('foooo');
+	}
 });
 
 app.get('/api/watchlist', (req, res) => {
