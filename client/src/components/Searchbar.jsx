@@ -1,20 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { StyledSearchbar } from './Searchbar.style';
 
-const Searchbar = ({ onSearchSubmit, suggestions, options }) => {
-	/* const [term, setTerm] = useState(''); */
+const Searchbar = ({ options }) => {
 	const [showOptions, setShowOptions] = useState(false);
 	const [selected, setSelected] = useState(undefined);
+	const [tickerData, setTickerData] = useState(null);
 
-	/* useEffect(() => {
-		if (suggestions) {
-			console.log('suggestiosnsnsn: ', suggestions);
+	useEffect(() => {
+		if (selected) {
+			fetch('/tickerTimeSeries', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					ticker: selected.Ticker
+				})
+			})
+				.then(res => res.json())
+				.then(data => {
+					data = data.reverse();
+					data.forEach(item => (item.date = new Date(item.date)));
+
+					if (data.length) {
+						setTickerData(data);
+					}
+					if (tickerData) {
+						console.log('there is tickerData', tickerData);
+					}
+				});
 		}
-		if (term !== '') {
-			onSearchSubmit(term);
-		}
-	}, [term]); */ // todo: https://stackoverflow.com/questions/55840294/how-to-fix-missing-dependency-warning-when-using-useeffect-react-hook
+	}, [selected]);
 
 	const inputEntered = txt => {
 		if (txt.length > 1) {
@@ -34,10 +51,11 @@ const Searchbar = ({ onSearchSubmit, suggestions, options }) => {
 				<Select
 					/* components={{ MenuList }} */
 					options={!showOptions ? [] : options}
-					getOptionLabel={options => options['Company']}
+					getOptionLabel={options =>
+						`${options['Ticker']} - ${options['Company']}`
+					}
 					getOptionValue={options => options['Ticker']}
 					backspaceRemovesValue={true}
-					/* debounce={2} */
 					onInputChange={e => inputEntered(e)}
 					onChange={handleChange}
 					isClearable={true}
@@ -47,12 +65,6 @@ const Searchbar = ({ onSearchSubmit, suggestions, options }) => {
 						{!selected ? '' : `${selected.Ticker} - ${selected.Company}`}
 					</span>
 				</div>
-				{/* <input
-					className="searchbar-input"
-					type="text"
-					placeholder="Search ticker symbol"
-					onChange={e => setTerm(e.target.value)}
-				/> */}
 			</div>
 		</StyledSearchbar>
 	);
