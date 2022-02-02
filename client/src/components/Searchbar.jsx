@@ -2,36 +2,17 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { StyledSearchbar } from './Searchbar.style';
 
-const Searchbar = ({ options }) => {
+const Searchbar = ({ options, onChange }) => {
 	const [showOptions, setShowOptions] = useState(false);
 	const [selected, setSelected] = useState(undefined);
 	const [tickerData, setTickerData] = useState(null);
 
 	useEffect(() => {
+		console.log('selected: ', selected);
 		if (selected) {
-			fetch('/tickerTimeSeries', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					ticker: selected.Ticker
-				})
-			})
-				.then(res => res.json())
-				.then(data => {
-					data = data.reverse();
-					data.forEach(item => (item.date = new Date(item.date)));
-
-					if (data.length) {
-						setTickerData(data);
-					}
-					if (tickerData) {
-						console.log('there is tickerData', tickerData);
-					}
-				});
+			onChange(selected.Ticker);
 		}
-	}, [selected]);
+	}, [selected, onChange]);
 
 	const inputEntered = txt => {
 		if (txt.length > 1) {
