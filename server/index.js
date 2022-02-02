@@ -51,8 +51,27 @@ app.post('/tickerTimeSeries', async (req, res) => {
 	if (timeSeries) {
 		res.status(200).json(timeSeries);
 	} else {
-		res.send('foooo');
+		res.send('foooo'); //todo: error handling
 	}
+});
+
+app.post('/tickerData', async (req, res) => {
+	const ticker = req.body.ticker;
+	const yahooData = await yahooFinance.quote(ticker, [
+		'calendarEvents',
+		'defaultKeyStatistics',
+		'earnings',
+		'financialData',
+		'price',
+		'recommendationTrend',
+		'summaryDetail',
+		'summaryProfile',
+		'upgradeDowngradeHistory'
+	]);
+
+	if (yahooData) {
+		res.status(200).json(yahooData);
+	} //todo: error handling
 });
 
 app.get('/api/watchlist', (req, res) => {

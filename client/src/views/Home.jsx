@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; /*
+import { getTickerTimeSeries } from '../api/getTickerTimeSeries'; */
+import { getTickerData } from '../api/';
 import Navbar from '../components/Navbar';
 import { useUserAuth } from '../context/UserAuthContext';
 import { StyledHome } from './Home.style';
@@ -8,18 +10,11 @@ const Home = () => {
 	const { user } = useUserAuth();
 	const [ticker, setTicker] = useState('');
 	const [tickerData, setTickerData] = useState([]);
+	const [tickerTimeSeries, setTickerTimeSeries] = useState([]);
 
 	useEffect(() => {
 		if (ticker) {
-			fetch('/tickerTimeSeries', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					ticker: ticker
-				})
-			})
+			/* getTickerTimeSeries(ticker)
 				.then(res => res.json())
 				.then(data => {
 					// todo: do in backend
@@ -27,12 +22,17 @@ const Home = () => {
 					data.forEach(item => (item.date = new Date(item.date)));
 
 					if (data.length) {
-						setTickerData(data);
+						setTickerTimeSeries(data);
 						console.log('there is tickerData', data);
 					}
+				}); */
+			getTickerData(ticker)
+				.then(res => res.json())
+				.then(data => {
+					setTickerData(data);
 				});
 		}
-	}, [ticker, setTickerData]);
+	}, [ticker, setTickerTimeSeries, setTickerData]);
 
 	return (
 		<StyledHome id="home-page" style={{ height: !ticker ? '100vh' : '' }}>
@@ -46,6 +46,7 @@ const Home = () => {
 					{' '}
 					+ search result:::
 					<div>{ticker && ticker}</div>
+					<div>{tickerData && JSON.stringify(tickerData)}</div>
 					<div>{tickerData && JSON.stringify(tickerData)}</div>
 				</div>
 			)}
