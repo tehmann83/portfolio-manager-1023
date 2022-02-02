@@ -35,7 +35,7 @@ const Home = () => {
 	}, [ticker, setTickerData]);
 
 	return (
-		<StyledHome id="home-page" style={{ height: '100vh' }}>
+		<StyledHome id="home-page" style={{ height: !ticker ? '100vh' : '' }}>
 			<div className="sticky-top">
 				<Navbar onChange={setTicker} />
 			</div>
