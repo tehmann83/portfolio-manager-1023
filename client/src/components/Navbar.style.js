@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledNavbar = styled.div`
+	background-color: #ffffff;
 	border: 1px solid blue;
 
 	display: flex;
